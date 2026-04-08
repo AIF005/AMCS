@@ -1,0 +1,62 @@
+[
+  {
+    "serial": 101,
+    "name": "Arif Hossain",
+    "facebook": "https://facebook.com/arif.h",
+    "imo": "01711122233",
+    "whatsapp": "01711122233",
+    "email": "arif@example.com",
+    "telegram": "arif_h",
+    "sms": "01711122233",
+    "profile_image": "https://i.pravatar.cc/150?u=arif",
+    "last_message_time": "2023-11-20T10:00:00Z"
+  },
+  {
+    "serial": 102,
+    "name": "Kamrul Hasan",
+    "facebook": "",
+    "imo": "01822334455",
+    "whatsapp": "",
+    "email": "",
+    "telegram": "",
+    "sms": "01822334455",
+    "profile_image": "https://invalid-image-url.com/missing.jpg",
+    "last_message_time": "2023-10-15T09:30:00Z"
+  },
+  {
+    "serial": 103,
+    "name": "Saidur Rahman",
+    "facebook": "https://facebook.com/saidur.r",
+    "imo": "",
+    "whatsapp": "01933445566",
+    "email": "saidur@demo.com",
+    "telegram": "saidur_tg",
+    "sms": "01933445566",
+    "profile_image": "https://i.pravatar.cc/150?u=saidur",
+    "last_message_time": "2023-12-01T14:45:00Z"
+  },
+  {
+    "serial": 104,
+    "name": "Tariqul Islam",
+    "facebook": "",
+    "imo": "",
+    "whatsapp": "01344556677",
+    "email": "",
+    "telegram": "tariq_77",
+    "sms": "",
+    "profile_image": "",
+    "last_message_time": "2023-12-10T16:20:00Z"
+  },
+  {
+    "serial": 105,
+    "name": "Rafiq Miah",
+    "facebook": "https://facebook.com/rafiq.m",
+    "imo": "01455667788",
+    "whatsapp": "01455667788",
+    "email": "rafiq@mail.invalid",
+    "telegram": "",
+    "sms": "01455667788",
+    "profile_image": "https://i.pravatar.cc/150?u=rafiq",
+    "last_message_time": "2023-11-25T11:15:00Z"
+  }
+]

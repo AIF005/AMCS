@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al Ikhlas Member Caring System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-color: #0B111B;
+  --card-bg: #151F2E;
+  --primary: #10B981; /* Emerald green */
+  --primary-hover: #059669;
+  --text-main: #F3F4F6;
+  --text-muted: #9CA3AF;
+  --border-color: #374151;
+  --disabled-bg: #1F2937;
+  --disabled-text: #4B5563;
+  --fbook: #1877F2;
+  --imo: #51A5D8;
+  --wapp: #25D366;
+  --mail: #EA4335;
+  --tele: #0088CC;
+  --sms: #8B5CF6;
+  --error: #EF4444;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+header {
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+}
+
+header .subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.progress-text {
+  text-align: right;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.progress-bar-container {
+  height: 8px;
+  background-color: var(--card-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--primary);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card.fade-out {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary);
+  margin-bottom: 1rem;
+  background-color: var(--bg-color);
+}
+
+.name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.serial {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  background-color: rgba(16, 185, 129, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  color: var(--primary);
+}
+
+.platforms-control h3 {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.platform-btn {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.platform-btn .icon {
+  font-size: 1.2rem;
+}
+
+.platform-btn:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.platform-btn.selected {
+  border-color: var(--primary);
+  background-color: rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+/* Colors for specific platforms when selected/active */
+.platform-btn[data-platform="facebook"].selected { border-color: var(--fbook); background-color: rgba(24, 119, 242, 0.1); box-shadow: 0 0 0 1px var(--fbook); }
+.platform-btn[data-platform="imo"].selected { border-color: var(--imo); background-color: rgba(81, 165, 216, 0.1); box-shadow: 0 0 0 1px var(--imo); }
+.platform-btn[data-platform="whatsapp"].selected { border-color: var(--wapp); background-color: rgba(37, 211, 102, 0.1); box-shadow: 0 0 0 1px var(--wapp); }
+.platform-btn[data-platform="email"].selected { border-color: var(--mail); background-color: rgba(234, 67, 53, 0.1); box-shadow: 0 0 0 1px var(--mail); }
+.platform-btn[data-platform="telegram"].selected { border-color: var(--tele); background-color: rgba(0, 136, 204, 0.1); box-shadow: 0 0 0 1px var(--tele); }
+.platform-btn[data-platform="sms"].selected { border-color: var(--sms); background-color: rgba(139, 92, 246, 0.1); box-shadow: 0 0 0 1px var(--sms); }
+
+.platform-btn:disabled {
+  background-color: var(--disabled-bg);
+  border-color: transparent;
+  color: var(--disabled-text);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.platform-btn:disabled .icon {
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+
+.actions-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.action-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 0.875rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.send-btn {
+  background-color: var(--primary);
+  color: white;
+}
+
+.send-btn:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.send-btn:disabled {
+  background-color: var(--disabled-bg);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+.back-btn, .skip-btn {
+  background-color: var(--border-color);
+  color: var(--text-main);
+}
+
+.back-btn:hover:not(:disabled), .skip-btn:hover:not(:disabled) {
+  background-color: #4B5563;
+}
+
+.back-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal.active {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 90%;
+  width: 350px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  border: 1px solid var(--border-color);
+}
+
+.modal-content h2 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.modal-content p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <h1>Al Ikhlas Foundation</h1>
+      <p class="subtitle">Member Caring System</p>
+    </header>
+
+    <div class="progress-section">
+      <div class="progress-text" id="progressText">0 / 0 completed</div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <main class="card" id="memberCard">
+      <div class="profile-section">
+        <img src="https://i.ibb.co.com/zHSB2sKx/IMG-20231221-WA0004.jpg" alt="Profile Image" class="profile-img" id="profileImg">
+        <h2 class="name" id="memberName">Loading...</h2>
+        <p class="serial" id="memberSerial">Sirial: #---</p>
+      </div>
+
+      <div class="platforms-control">
+        <h3>Select Contact Method</h3>
+        <div class="platforms-grid" id="platformsGrid">
+          <button class="platform-btn" data-platform="facebook" id="btn-facebook">
+            <span class="icon">f</span>
+            Facebook
+          </button>
+          <button class="platform-btn" data-platform="imo" id="btn-imo">
+            <span class="icon">☎</span>
+            IMO
+          </button>
+          <button class="platform-btn" data-platform="whatsapp" id="btn-whatsapp">
+            <span class="icon">💬</span>
+            WhatsApp
+          </button>
+          <button class="platform-btn" data-platform="email" id="btn-email">
+            <span class="icon">✉</span>
+            Email
+          </button>
+          <button class="platform-btn" data-platform="telegram" id="btn-telegram">
+            <span class="icon">✈</span>
+            Telegram
+          </button>
+          <button class="platform-btn" data-platform="sms" id="btn-sms">
+            <span class="icon">📱</span>
+            SMS
+          </button>
+        </div>
+      </div>
+
+      <div class="actions-section">
+        <button class="action-btn back-btn" id="backBtn">Back</button>
+        <button class="action-btn send-btn" id="sendBtn" disabled>Send</button>
+        <button class="action-btn skip-btn" id="skipBtn">Skip</button>
+      </div>
+    </main>
+  </div>
+
+  <div id="completionModal" class="modal">
+    <div class="modal-content">
+      <h2>Alhamdulillah</h2>
+      <p>All members have been contacted.</p>
+      <button id="restartBtn" class="action-btn send-btn">Restart</button>
+    </div>
+  </div>
+
+  <script>
+// DOM Elements
+const profileImg = document.getElementById('profileImg');
+const memberName = document.getElementById('memberName');
+const memberSerial = document.getElementById('memberSerial');
+const progressText = document.getElementById('progressText');
+const progressBar = document.getElementById('progressBar');
+const card = document.getElementById('memberCard');
+const platformsGrid = document.getElementById('platformsGrid');
+const sendBtn = document.getElementById('sendBtn');
+const backBtn = document.getElementById('backBtn');
+const skipBtn = document.getElementById('skipBtn');
+const completionModal = document.getElementById('completionModal');
+const restartBtn = document.getElementById('restartBtn');
+
+// State
+let members = [];
+let currentIndex = 0;
+let selectedPlatform = null;
+
+const DEFAULT_IMAGE = "https://i.ibb.co.com/zHSB2sKx/IMG-20231221-WA0004.jpg";
+const MESSAGE_TEMPLATE = `Assalamu Alaikum,\nআপনার এই মাসের দানটি প্রদান করার জন্য অনুরোধ করা যাচ্ছে।\n- Al Ikhlas Foundation`;
+
+// Initialize
+async function init() {
+  try {
+    const response = await fetch('data.json');
+    members = await response.json();
+    
+    // Attempt to get nextP from Sketchware Android bridge
+    getInitialIndex();
+    
+    // Bind Events
+    setupEventListeners();
+    
+    // Render first available member
+    renderMember();
+  } catch (err) {
+    console.error("Failed to load member data:", err);
+    memberName.textContent = "Error loading data";
+  }
+}
+
+function getInitialIndex() {
+  try {
+    if (typeof Android !== 'undefined' && typeof Android.getNextP === 'function') {
+      const nextP = parseInt(Android.getNextP());
+      if (!isNaN(nextP) && nextP >= 0 && nextP < members.length) {
+        currentIndex = nextP;
+        return;
+      }
+    } else if (typeof nextP !== 'undefined') {
+      // Global variable fallback
+      const idx = parseInt(nextP);
+      if (!isNaN(idx) && idx >= 0 && idx < members.length) {
+        currentIndex = idx;
+        return;
+      }
+    }
+  } catch(e) {
+    console.log("Android bridge nextP not found, starting at 0");
+  }
+  currentIndex = 0;
+}
+
+function setupEventListeners() {
+  // Platform selection
+  const platformBtns = document.querySelectorAll('.platform-btn');
+  platformBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Ignore if disabled
+      if (btn.disabled) return;
+      
+      // Remove selected class from all
+      platformBtns.forEach(b => b.classList.remove('selected'));
+      
+      // Add selected to clicked
+      btn.classList.add('selected');
+      selectedPlatform = btn.dataset.platform;
+      
+      // Enable send button
+      sendBtn.disabled = false;
+    });
+  });
+
+  // Action borders
+  sendBtn.addEventListener('click', handleSend);
+  skipBtn.addEventListener('click', handleSkip);
+  backBtn.addEventListener('click', handleBack);
+  restartBtn.addEventListener('click', restart);
+  
+  // Image error handling
+  profileImg.addEventListener('error', () => {
+    profileImg.src = DEFAULT_IMAGE;
+  });
+}
+
+function renderMember() {
+  if (currentIndex >= members.length) {
+    showCompletionDialog();
+    return;
+  }
+  if (currentIndex < 0) {
+    currentIndex = 0;
+  }
+
+  const member = members[currentIndex];
+  
+  // Update UI Elements
+  profileImg.src = member.profile_image || DEFAULT_IMAGE;
+  memberName.textContent = member.name || "Unknown Name";
+  memberSerial.textContent = `Serial: #${member.serial || '---'}`;
+  
+  // Update Progress
+  progressText.textContent = `${currentIndex + 1} / ${members.length} completed`;
+  const percent = ((currentIndex + 1) / members.length) * 100;
+  progressBar.style.width = `${percent}%`;
+
+  // Update Back button state
+  backBtn.disabled = currentIndex === 0;
+
+  // Reset Platform Selection
+  selectedPlatform = null;
+  sendBtn.disabled = true;
+  document.querySelectorAll('.platform-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    
+    // Check if member has data for this platform
+    const platform = btn.dataset.platform;
+    if (member[platform] && member[platform].trim() !== '') {
+      btn.disabled = false;
+    } else {
+      btn.disabled = true;
+    }
+  });
+
+  // Fade In effect
+  card.classList.remove('fade-out');
+}
+
+function transitionToNext() {
+  card.classList.add('fade-out');
+  setTimeout(() => {
+    currentIndex++;
+    renderMember();
+  }, 300);
+}
+
+function transitionToPrevious() {
+  if (currentIndex > 0) {
+    card.classList.add('fade-out');
+    setTimeout(() => {
+      currentIndex--;
+      renderMember();
+    }, 300);
+  }
+}
+
+function handleSend() {
+  if (!selectedPlatform) return;
+  
+  const member = members[currentIndex];
+  
+  // Simulate Random time generator update (extra feature requested)
+  const fakeDate = new Date();
+  fakeDate.setMinutes(fakeDate.getMinutes() - Math.floor(Math.random() * 60));
+  member.last_message_time = fakeDate.toISOString();
+  
+  // Send data to Android Bridge
+  try {
+    if (typeof Android !== 'undefined' && typeof Android.sendValueAndCall === 'function') {
+      Android.sendValueAndCall(
+        selectedPlatform, 
+        JSON.stringify(member), 
+        MESSAGE_TEMPLATE
+      );
+    } else {
+      // Development logs
+      console.log(`[Bridge Simulation] sendValueAndCall called`);
+      console.log(`Platform: ${selectedPlatform}`);
+      console.log(`UserData:`, member);
+      console.log(`Message:\n${MESSAGE_TEMPLATE}`);
+    }
+  } catch(e) {
+    console.error("Bridge Error: ", e);
+  }
+
+  // Go to next automatically
+  transitionToNext();
+}
+
+function handleSkip() {
+  transitionToNext();
+}
+
+function handleBack() {
+  transitionToPrevious();
+}
+
+function showCompletionDialog() {
+  completionModal.classList.add('active');
+  card.style.display = 'none';
+  document.querySelector('.actions-section').style.display = 'none';
+}
+
+function restart() {
+  currentIndex = 0;
+  completionModal.classList.remove('active');
+  card.style.display = 'flex';
+  document.querySelector('.actions-section').style.display = 'grid';
+  renderMember();
+}
+
+// Start app
+document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
